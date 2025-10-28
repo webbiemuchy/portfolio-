@@ -833,7 +833,7 @@
       <p class="section-subtitle">Real-world solutions built with cutting-edge tech</p>
 
       <div class="projects-grid">
-        <div class="project-card" onclick="showProjectModal('Smart Irrigation')">
+        <div class="project-card">
           <div class="project-icon" style="background:linear-gradient(135deg,var(--primary),var(--secondary))">
             🌱
           </div>
@@ -846,7 +846,7 @@
             <span class="tag">ESP8266</span>
             <span class="tag">Machine Learning</span>
           </div>
-          <div class="project-links" onclick="event.stopPropagation()">
+          <div class="project-links">
             <a href="https://github.com/webbiemuchy/IOT-based-smart-irrigation-system" target="_blank" class="icon-btn" aria-label="View GitHub Repository">
               <i class="fab fa-github"></i>
             </a>
@@ -857,7 +857,7 @@
           </div>
         </div>
 
-        <div class="project-card" onclick="showProjectModal('Cashflow Dashboard')">
+        <div class="project-card">
           <div class="project-icon" style="background:linear-gradient(135deg,var(--accent),var(--secondary))">
             💰
           </div>
@@ -870,7 +870,7 @@
             <span class="tag">Streamlit</span>
             <span class="tag">ML</span>
           </div>
-          <div class="project-links" onclick="event.stopPropagation()">
+          <div class="project-links">
             <a href="https://github.com/webbiemuchy/zim-cash-flow-app" target="_blank" class="icon-btn" aria-label="View GitHub Repository">
               <i class="fab fa-github"></i>
             </a>
@@ -880,7 +880,7 @@
           </div>
         </div>
 
-        <div class="project-card" onclick="showProjectModal('Student Portal')">
+        <div class="project-card">
           <div class="project-icon" style="background:linear-gradient(135deg,var(--secondary),var(--primary))">
             🎓
           </div>
@@ -893,7 +893,7 @@
             <span class="tag">MySQL</span>
             <span class="tag">Bootstrap</span>
           </div>
-          <div class="project-links" onclick="event.stopPropagation()">
+          <div class="project-links">
             <a href="https://github.com/webbiemuchy/Student-Portal---PHP-Web-Application" target="_blank" class="icon-btn" aria-label="View GitHub Repository">
               <i class="fab fa-github"></i>
             </a>
@@ -903,7 +903,7 @@
           </div>
         </div>
 
-        <div class="project-card" onclick="showProjectModal('Expense Tracker')">
+        <div class="project-card">
           <div class="project-icon" style="background:linear-gradient(135deg,var(--accent),var(--primary))">
             📱
           </div>
@@ -916,8 +916,7 @@
             <span class="tag">SQLite</span>
             <span class="tag">Dart</span>
           </div>
-          <!-- FIXED: Updated hrefs to be real (or placeholder) links -->
-          <div class="project-links" onclick="event.stopPropagation()">
+          <div class="project-links">
             <a href="https://example.com/mobile-app-link" target="_blank" class="icon-btn" aria-label="View App Store Link (Placeholder)">
               <i class="fas fa-mobile-alt"></i>
             </a>
@@ -1207,6 +1206,25 @@
       }, 500);
     }, 4000);
 
+    // ==================== PROJECT CARD INTERACTIONS ====================
+    function initProjectCards() {
+      const projectCards = document.querySelectorAll('.project-card');
+      
+      projectCards.forEach(card => {
+        card.addEventListener('click', (e) => {
+          // Don't trigger modal if user clicked on links or icons
+          if (e.target.closest('.project-links') || 
+              e.target.closest('.icon-btn') || 
+              e.target.tagName === 'A') {
+            return; // Let the link handle the click
+          }
+          
+          // Only show modal when clicking on the card itself (not links)
+          const title = card.querySelector('.project-title').textContent;
+          showProjectModal(title);
+        });
+      });
+    }
 
     // ==================== INTERSECTION OBSERVER FOR ANIMATIONS ====================
     const observerOptions = {
@@ -1285,10 +1303,10 @@
 
     // ==================== PROJECT MODAL ====================
     const projectDetails = {
-      'Smart Irrigation': 'An innovative IoT system that leverages soil moisture sensors, ESP8266 microcontrollers, and machine learning algorithms to create an intelligent irrigation solution. The system automatically adjusts watering schedules based on real-time soil conditions, weather forecasts, and plant requirements, resulting in up to 40% water savings.',
-      'Cashflow Dashboard': 'A sophisticated financial analytics dashboard built with Python and Streamlit. Features predictive modeling using time-series analysis to forecast cashflow patterns, helping businesses in Zimbabwe navigate complex payment environments. Includes interactive visualizations and scenario planning tools.',
-      'Student Portal': 'Comprehensive student management system with role-based access control. Features include online registration, grade management, assignment submission, attendance tracking, and administrative tools. Built with PHP, MySQL, and modern responsive design principles.',
-      'Expense Tracker': 'Cross-platform mobile application for personal finance management. Includes budget categorization, expense tracking with receipt scanning, visual analytics with charts, recurring transaction management, and offline-first architecture with SQLite database.'
+      'AI-Driven Smart Irrigation': 'An innovative IoT system that leverages soil moisture sensors, ESP8266 microcontrollers, and machine learning algorithms to create an intelligent irrigation solution. The system automatically adjusts watering schedules based on real-time soil conditions, weather forecasts, and plant requirements, resulting in up to 40% water savings.',
+      'Cashflow Prediction Dashboard': 'A sophisticated financial analytics dashboard built with Python and Streamlit. Features predictive modeling using time-series analysis to forecast cashflow patterns, helping businesses in Zimbabwe navigate complex payment environments. Includes interactive visualizations and scenario planning tools.',
+      'Student Portal System': 'Comprehensive student management system with role-based access control. Features include online registration, grade management, assignment submission, attendance tracking, and administrative tools. Built with PHP, MySQL, and modern responsive design principles.',
+      'Mobile Expense Tracker': 'Cross-platform mobile application for personal finance management. Includes budget categorization, expense tracking with receipt scanning, visual analytics with charts, recurring transaction management, and offline-first architecture with SQLite database.'
     };
 
     function showProjectModal(title) {
@@ -1344,8 +1362,12 @@
       });
     });
 
+    // ==================== INITIALIZATION ====================
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize project cards with proper click handling
+      initProjectCards();
+    });
+
   </script>
 </body>
 </html>
-
-
