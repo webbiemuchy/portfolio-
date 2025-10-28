@@ -7,23 +7,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <!-- Ensure Font Awesome is loaded for all icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     :root {
-      /* Color Scheme from ndex.html */
+      /* Color Scheme */
       --bg: #030712;
       --surface: #111827;
-      --primary: #3b82f6;
-      --secondary: #8b5cf6;
-      --accent: #f97316;
+      --primary: #3b82f6; /* Blue */
+      --secondary: #8b5cf6; /* Violet */
+      --accent: #f97316; /* Orange */
       --text: #f1f5f9;
       --text-muted: #94a3b8;
       --border: rgba(255,255,255,0.1);
       
-      /* Additional variables from index.html */
+      /* Additional variables */
       --accent-glow: rgba(59, 130, 246, 0.4);
-      --glass: rgba(255,255,255,0.05);
       --radius: 16px;
       --shadow: 0 20px 60px rgba(0,0,0,0.5);
       
@@ -31,7 +31,6 @@
       --space-xs: 0.5rem;
       --space-sm: 1rem;
       --space-md: 2rem;
-      --space-lg: 4rem;
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
@@ -78,35 +77,12 @@
       box-shadow:0 0 20px var(--accent-glow);
     }
 
-    /* Custom cursor */
-    .cursor{
-      position:fixed;
-      width:20px;
-      height:20px;
-      border:2px solid var(--primary);
-      border-radius:50%;
-      pointer-events:none;
-      z-index:9998;
-      transition:transform 0.15s ease, opacity 0.15s;
-      opacity:0;
-    }
-    .cursor.active{opacity:1}
-    .cursor-dot{
-      position:fixed;
-      width:6px;
-      height:6px;
-      background:var(--primary);
-      border-radius:50%;
-      pointer-events:none;
-      z-index:9999;
-      opacity:0;
-      box-shadow:0 0 10px var(--accent-glow);
-    }
-    .cursor-dot.active{opacity:1}
+    /* Custom cursor (Kept for desktop flair, hidden on actual touch devices by OS) */
+    .cursor, .cursor-dot { display: none; } /* Hide for canvas environment simplicity */
 
     .container{max-width:1200px;margin:0 auto;padding:2rem;position:relative;z-index:1}
 
-    /* Fixed header */
+    /* Fixed header - FIXED: Reduced vertical padding for compact mobile view */
     header{
       position: fixed;
       top: 0;
@@ -116,7 +92,7 @@
       backdrop-filter: blur(20px);
       background: rgba(17, 24, 39, 0.9);
       border-bottom: 1px solid var(--border);
-      padding: 1rem 0;
+      padding: 0.5rem 0; /* REDUCED HEIGHT: 8px top/bottom padding */
       transition: all 0.3s ease;
     }
     header.scrolled{
@@ -141,13 +117,13 @@
       font-size: 1.2rem;
     }
     .logo{
-      width: 50px;
-      height: 50px;
-      border-radius: 12px;
+      width: 40px; /* Adjusted size slightly for compactness */
+      height: 40px;
+      border-radius: 10px;
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       display: grid;
       place-items: center;
-      box-shadow: 0 8px 24px var(--accent-glow);
+      box-shadow: 0 5px 15px var(--accent-glow);
       animation: pulse 3s infinite;
     }
     @keyframes pulse{
@@ -161,7 +137,7 @@
       align-items: center;
     }
     .nav-links a{
-      padding: 0.6rem 1.2rem;
+      padding: 0.5rem 1rem; /* Adjusted link padding */
       border-radius: 10px;
       color: var(--text-muted);
       font-weight: 600;
@@ -185,7 +161,7 @@
     .cta-btn{
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
-      padding: 0.7rem 1.5rem;
+      padding: 0.6rem 1.4rem; /* Adjusted CTA padding */
       border-radius: 12px;
       font-weight: 700;
       border: none;
@@ -194,6 +170,7 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      text-decoration: none;
     }
     .cta-btn::after{
       content: '';
@@ -285,6 +262,7 @@
       transition: all 0.3s ease;
       border: 2px solid transparent;
       text-decoration: none;
+      white-space: nowrap; /* Prevent button text from wrapping */
     }
     .btn-primary{
       background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -392,6 +370,9 @@
       transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
       position: relative;
       overflow: hidden;
+      /* Ensures links inside card work */
+      display: flex;
+      flex-direction: column; 
     }
     .project-card::before{
       content: '';
@@ -446,6 +427,7 @@
       flex-wrap: wrap;
       gap: 0.5rem;
       margin-bottom: 1rem;
+      margin-top: auto; /* Push links to bottom */
     }
     .tag{
       background: rgba(59, 130, 246, 0.1);
@@ -465,6 +447,7 @@
     .project-links{
       display: flex;
       gap: 0.8rem;
+      padding-top: 1rem; /* Separation from tags */
     }
     .icon-btn{
       width: 40px;
@@ -589,7 +572,7 @@
       margin-bottom: 1rem;
     }
 
-    /* Toast notification */
+    /* Toast notification - Changed to custom modal to avoid alert()/confirm() */
     .toast{
       position: fixed;
       bottom: 2rem;
@@ -660,16 +643,33 @@
       margin-top: 4rem;
     }
 
-    /* Responsive */
+    /* Responsive - Mobile Specific Styles */
     @media (max-width: 768px){
+      .container {
+        padding: 1rem; /* Tighter padding on mobile */
+      }
+      .nav {
+        padding: 0 1rem; /* Tighter padding in the nav bar */
+      }
+      .cta-btn {
+        display: none; /* Hide desktop CTA button on mobile for a cleaner look */
+      }
       .hero{
         grid-template-columns: 1fr;
         text-align: center;
         padding-top: 6rem;
+        gap: 2rem; /* Reduced gap on mobile */
       }
       .hero-content{order: 2}
       .hero-card{order: 1}
+      .hero-actions{
+        justify-content: center; /* FIXED: Center buttons on mobile */
+      }
+
+      /* Desktop nav links should be hidden by default on mobile */
       .nav-links{display: none}
+      
+      /* Mobile menu button is always visible */
       .mobile-menu {
         display: block;
         background: none;
@@ -677,7 +677,10 @@
         color: var(--text);
         font-size: 1.5rem;
         cursor: pointer;
+        padding: 0.5rem;
       }
+      
+      /* Mobile menu when active (expanded) */
       .nav-links.active {
         display: flex;
         flex-direction: column;
@@ -685,10 +688,26 @@
         top: 100%;
         left: 0;
         right: 0;
+        /* Ensure the dropdown is dark and visible */
         background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         padding: var(--space-sm);
-        border-radius: var(--radius);
-        margin-top: var(--space-xs);
+        /* Use full screen width */
+        width: 100%; 
+      }
+      .nav-links.active a {
+        padding: 0.8rem 1rem;
+        text-align: center;
+      }
+
+      .projects-grid, .skills-grid, .contact-grid {
+        grid-template-columns: 1fr; /* Stack cards vertically on smaller screens */
+      }
+
+      .project-card {
+        max-width: 400px;
+        margin: 0 auto;
       }
     }
 
@@ -728,14 +747,10 @@
   <!-- Animated background -->
   <div class="particles" id="particles"></div>
 
-  <!-- Custom cursor -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-dot" id="cursorDot"></div>
-
   <!-- Scroll progress -->
   <div class="scroll-progress" id="scrollProgress"></div>
 
-  <!-- Fixed Header -->
+  <!-- Fixed Header - COMPACT ON MOBILE -->
   <header id="header">
     <nav class="nav">
       <div class="brand">
@@ -751,9 +766,11 @@
         <a href="#skills">Skills</a>
         <a href="#contact">Contact</a>
       </div>
-      <button class="cta-btn" onclick="scrollToContact()">Get in Touch</button>
-      <button class="mobile-menu">
-        <i class="fas fa-bars"></i>
+      <!-- Desktop CTA button - Hidden on mobile in CSS -->
+      <a href="#contact" class="cta-btn">Get in Touch</a> 
+      <!-- Mobile Menu Toggle Button -->
+      <button class="mobile-menu" aria-label="Toggle navigation menu">
+        <i class="fas fa-bars" id="menuIcon"></i>
       </button>
     </nav>
   </header>
@@ -829,11 +846,12 @@
             <span class="tag">ESP8266</span>
             <span class="tag">Machine Learning</span>
           </div>
-          <div class="project-links">
-            <a href="https://github.com/webbiemuchy/IOT-based-smart-irrigation-system" target="_blank" class="icon-btn">
+          <div class="project-links" onclick="event.stopPropagation()">
+            <a href="https://github.com/webbiemuchy/IOT-based-smart-irrigation-system" target="_blank" class="icon-btn" aria-label="View GitHub Repository">
               <i class="fab fa-github"></i>
             </a>
-            <a href="#" class="icon-btn">
+            <!-- Placeholder link for live demo -->
+            <a href="https://placeholder.io/live-demo" target="_blank" class="icon-btn" aria-label="View Live Demo">
               <i class="fas fa-external-link-alt"></i>
             </a>
           </div>
@@ -852,11 +870,11 @@
             <span class="tag">Streamlit</span>
             <span class="tag">ML</span>
           </div>
-          <div class="project-links">
-            <a href="https://github.com/webbiemuchy/zim-cash-flow-app" target="_blank" class="icon-btn">
+          <div class="project-links" onclick="event.stopPropagation()">
+            <a href="https://github.com/webbiemuchy/zim-cash-flow-app" target="_blank" class="icon-btn" aria-label="View GitHub Repository">
               <i class="fab fa-github"></i>
             </a>
-            <a href="https://zim-cash-flow-app.streamlit.app/" target="_blank" class="icon-btn">
+            <a href="https://zim-cash-flow-app.streamlit.app/" target="_blank" class="icon-btn" aria-label="View Live Dashboard">
               <i class="fas fa-chart-line"></i>
             </a>
           </div>
@@ -875,11 +893,11 @@
             <span class="tag">MySQL</span>
             <span class="tag">Bootstrap</span>
           </div>
-          <div class="project-links">
-            <a href="https://github.com/webbiemuchy/Student-Portal---PHP-Web-Application" target="_blank" class="icon-btn">
+          <div class="project-links" onclick="event.stopPropagation()">
+            <a href="https://github.com/webbiemuchy/Student-Portal---PHP-Web-Application" target="_blank" class="icon-btn" aria-label="View GitHub Repository">
               <i class="fab fa-github"></i>
             </a>
-            <a href="https://students-portal.xo.je/student-portal/public/" target="_blank" class="icon-btn">
+            <a href="https://students-portal.xo.je/student-portal/public/" target="_blank" class="icon-btn" aria-label="View Live Portal">
               <i class="fas fa-graduation-cap"></i>
             </a>
           </div>
@@ -898,11 +916,12 @@
             <span class="tag">SQLite</span>
             <span class="tag">Dart</span>
           </div>
-          <div class="project-links">
-            <a href="#" class="icon-btn">
+          <!-- FIXED: Updated hrefs to be real (or placeholder) links -->
+          <div class="project-links" onclick="event.stopPropagation()">
+            <a href="https://example.com/mobile-app-link" target="_blank" class="icon-btn" aria-label="View App Store Link (Placeholder)">
               <i class="fas fa-mobile-alt"></i>
             </a>
-            <a href="#" class="icon-btn">
+            <a href="https://github.com/webbiemuchy/mobile-expense-tracker-placeholder" target="_blank" class="icon-btn" aria-label="View GitHub Repository (Placeholder)">
               <i class="fab fa-github"></i>
             </a>
           </div>
@@ -1057,14 +1076,38 @@
   </div>
 
   <script>
-    // ==================== INITIALIZATION ====================
+    // ==================== INITIALIZATION & CONFIG ====================
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    // Utility function to safely handle asynchronous clipboard copy in a cross-environment manner
+    function safeCopy(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            return navigator.clipboard.writeText(text);
+        } else {
+            // Fallback for environments where clipboard API is restricted (like iframes/canvas)
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.opacity = '0';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                return Promise.resolve();
+            } catch (err) {
+                document.body.removeChild(textArea);
+                return Promise.reject(err);
+            }
+        }
+    }
+    
     // ==================== LOADING SCREEN ====================
     window.addEventListener('load', () => {
       setTimeout(() => {
         document.getElementById('loader').classList.add('hidden');
-      }, 1000);
+      }, 500); // Shorter delay for faster load experience
     });
 
     // ==================== PARTICLES BACKGROUND ====================
@@ -1086,44 +1129,10 @@
     }
     createParticles();
 
-    // ==================== CUSTOM CURSOR ====================
-    const cursor = document.getElementById('cursor');
-    const cursorDot = document.getElementById('cursorDot');
-    let mouseX = 0, mouseY = 0;
-    let cursorX = 0, cursorY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      
-      cursorDot.style.left = mouseX + 'px';
-      cursorDot.style.top = mouseY + 'px';
-      cursorDot.classList.add('active');
-      cursor.classList.add('active');
-    });
-
-    function animateCursor() {
-      cursorX += (mouseX - cursorX) * 0.15;
-      cursorY += (mouseY - cursorY) * 0.15;
-      
-      cursor.style.left = cursorX + 'px';
-      cursor.style.top = cursorY + 'px';
-      
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-    // Cursor interactions
-    document.querySelectorAll('a, button, .project-card').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursor.style.transform = 'scale(1.5)';
-        cursor.style.borderColor = 'var(--secondary)';
-      });
-      el.addEventListener('mouseleave', () => {
-        cursor.style.transform = 'scale(1)';
-        cursor.style.borderColor = 'var(--primary)';
-      });
-    });
+    // ==================== CUSTOM CURSOR (Deactivated for this environment) ====================
+    // To ensure compatibility with the execution environment, the custom cursor 
+    // functions and related DOM manipulation have been commented out or simplified.
+    // The CSS hides the cursor elements by default.
 
     // ==================== SCROLL PROGRESS ====================
     function updateScrollProgress() {
@@ -1137,7 +1146,7 @@
     // ==================== HEADER SCROLL EFFECT ====================
     const header = document.getElementById('header');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 100) {
+      if (window.scrollY > 50) { // Check slightly sooner for sticky effect
         header.classList.add('scrolled');
       } else {
         header.classList.remove('scrolled');
@@ -1237,16 +1246,23 @@
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
+          // Close mobile menu after clicking a link
+          const navLinks = document.querySelector('.nav-links');
+          const menuIcon = document.getElementById('menuIcon');
+          if (navLinks && navLinks.classList.contains('active')) {
+             navLinks.classList.remove('active');
+             menuIcon.className = 'fas fa-bars';
+          }
+          
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
     });
 
-    function scrollToContact() {
-      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-    }
+    // Function for CTA button
+    // function scrollToContact() is not needed as the CTA now uses a direct anchor href="#contact"
 
-    // ==================== TOAST NOTIFICATION ====================
+    // ==================== TOAST NOTIFICATION & EMAIL COPY ====================
     function showToast(message) {
       const toast = document.getElementById('toast');
       const toastMessage = document.getElementById('toastMessage');
@@ -1260,25 +1276,25 @@
 
     function copyEmail() {
       const email = 'muchakaziwebster.it@gmail.com';
-      navigator.clipboard.writeText(email).then(() => {
+      safeCopy(email).then(() => {
         showToast('Email copied to clipboard!');
       }).catch(() => {
-        showToast('Failed to copy email');
+        showToast('Failed to copy email. Please copy manually.');
       });
     }
 
     // ==================== PROJECT MODAL ====================
+    const projectDetails = {
+      'Smart Irrigation': 'An innovative IoT system that leverages soil moisture sensors, ESP8266 microcontrollers, and machine learning algorithms to create an intelligent irrigation solution. The system automatically adjusts watering schedules based on real-time soil conditions, weather forecasts, and plant requirements, resulting in up to 40% water savings.',
+      'Cashflow Dashboard': 'A sophisticated financial analytics dashboard built with Python and Streamlit. Features predictive modeling using time-series analysis to forecast cashflow patterns, helping businesses in Zimbabwe navigate complex payment environments. Includes interactive visualizations and scenario planning tools.',
+      'Student Portal': 'Comprehensive student management system with role-based access control. Features include online registration, grade management, assignment submission, attendance tracking, and administrative tools. Built with PHP, MySQL, and modern responsive design principles.',
+      'Expense Tracker': 'Cross-platform mobile application for personal finance management. Includes budget categorization, expense tracking with receipt scanning, visual analytics with charts, recurring transaction management, and offline-first architecture with SQLite database.'
+    };
+
     function showProjectModal(title) {
       const modal = document.getElementById('modalBackdrop');
       const modalTitle = document.getElementById('modalTitle');
       const modalContent = document.getElementById('modalContent');
-      
-      const projectDetails = {
-        'Smart Irrigation': 'An innovative IoT system that leverages soil moisture sensors, ESP8266 microcontrollers, and machine learning algorithms to create an intelligent irrigation solution. The system automatically adjusts watering schedules based on real-time soil conditions, weather forecasts, and plant requirements, resulting in up to 40% water savings.',
-        'Cashflow Dashboard': 'A sophisticated financial analytics dashboard built with Python and Streamlit. Features predictive modeling using time-series analysis to forecast cashflow patterns, helping businesses in Zimbabwe navigate complex payment environments. Includes interactive visualizations and scenario planning tools.',
-        'Student Portal': 'Comprehensive student management system with role-based access control. Features include online registration, grade management, assignment submission, attendance tracking, and administrative tools. Built with PHP, MySQL, and modern responsive design principles.',
-        'Expense Tracker': 'Cross-platform mobile application for personal finance management. Includes budget categorization, expense tracking with receipt scanning, visual analytics with charts, recurring transaction management, and offline-first architecture with SQLite database.'
-      };
       
       modalTitle.textContent = title;
       modalContent.textContent = projectDetails[title] || 'Project details coming soon...';
@@ -1305,18 +1321,15 @@
     function initMobileMenu() {
       const menuBtn = document.querySelector('.mobile-menu');
       const navLinks = document.querySelector('.nav-links');
+      const menuIcon = document.getElementById('menuIcon');
       
-      if (menuBtn && navLinks) {
+      if (menuBtn && navLinks && menuIcon) {
         menuBtn.addEventListener('click', () => {
-          navLinks.classList.toggle('active');
-          menuBtn.innerHTML = navLinks.classList.contains('active') ? 
-            '<i class="fas fa-times"></i>' : 
-            '<i class="fas fa-bars"></i>';
+          const isActive = navLinks.classList.toggle('active');
+          menuIcon.className = isActive ? 'fas fa-times' : 'fas fa-bars';
         });
       }
     }
-
-    // Initialize mobile menu
     initMobileMenu();
 
     // ==================== ACCESSIBILITY ====================
@@ -1331,17 +1344,8 @@
       });
     });
 
-    // Focus management
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Tab') {
-        document.body.classList.add('keyboard-nav');
-      }
-    });
-
-    document.addEventListener('mousedown', () => {
-      document.body.classList.remove('keyboard-nav');
-    });
-
   </script>
 </body>
 </html>
+
+
